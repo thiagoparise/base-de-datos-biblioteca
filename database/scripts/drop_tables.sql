@@ -21,7 +21,7 @@ DROP TABLE IF EXISTS DocenteMateria;
 DROP TABLE IF EXISTS LibroMateria;
 DROP TABLE IF EXISTS EdicionPalabra;
 DROP TABLE IF EXISTS EdicionTema;
-DROP TABLE IF EXISTS Autor_Libro;
+DROP TABLE IF EXISTS AutorLibro;
 
 
 -- =========================================

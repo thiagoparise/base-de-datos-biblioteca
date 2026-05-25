@@ -9,7 +9,7 @@ CREATE TABLE Consulta (
 
 	CONSTRAINT PK_Consulta PRIMARY KEY (idConsulta),
 
-	CONSTRAINT FK_Consulta_Ejemplar FOREIGN KEY (codISBN, numEjemplar) REFERENCES Ejemplar(codISBN, numEjemplar),
+	CONSTRAINT FK_Consulta_Ejemplar FOREIGN KEY (numEjemplar, codISBN) REFERENCES Ejemplar(numEjemplar, codISBN),
 
 	CONSTRAINT FK_Consulta_Lector FOREIGN KEY (numLector) REFERENCES Lector(numLector)
 );

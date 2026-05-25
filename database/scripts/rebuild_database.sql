@@ -16,7 +16,7 @@ PRINT '=========================================';
 
 PRINT 'Dropping tables...';
 
-:r ../scripts/drop_tables.sql
+:r drop_tables.sql
 
 
 -- =========================================
@@ -35,6 +35,16 @@ PRINT 'Creando tablas principales...';
 :r ../tables/entities/materia.sql
 :r ../tables/entities/lector.sql
 
+-- =========================================
+-- ESPECIALIZACIONES
+-- =========================================
+
+PRINT 'Creando especializaciones de lector...';
+
+:r ../tables/entities/lector_docente.sql
+:r ../tables/entities/lector_alumno.sql
+:r ../tables/entities/lector_graduado.sql
+
 
 -- =========================================
 -- TABLAS DEPENDIENTES
@@ -48,18 +58,6 @@ PRINT 'Creando tablas dependientes...';
 :r ../tables/entities/prestamo.sql
 :r ../tables/entities/consulta.sql
 
-
--- =========================================
--- ESPECIALIZACIONES
--- =========================================
-
-PRINT 'Creando especializaciones de lector...';
-
-:r ../tables/entities/lector_docente.sql
-:r ../tables/entities/lector_alumno.sql
-:r ../tables/entities/lector_graduado.sql
-
-
 -- =========================================
 -- TABLAS RELACIONALES N:M
 -- =========================================
@@ -71,21 +69,21 @@ PRINT 'Creando tablas relacionales...';
 :r ../tables/relations/edicion_palabra.sql
 :r ../tables/relations/libro_materia.sql
 :r ../tables/relations/docente_materia.sql
-:r ../tables/relations/recomendado.sql
 :r ../tables/relations/ejemplar_prestamo.sql
+:r ../tables/relations/recomendado.sql
 
 
 -- =========================================
 -- SEED DATA
 -- =========================================
 
-PRINT 'Insertando datos iniciales...';
+--PRINT 'Insertando datos iniciales...';
 
-:r ../seed/idiomas.sql
-:r ../seed/estados.sql
-:r ../seed/temas.sql
-:r ../seed/editoriales.sql
-:r ../seed/materias.sql
+--:r ../seed/idiomas.sql
+--:r ../seed/estados.sql
+--:r ../seed/temas.sql
+--:r ../seed/editoriales.sql
+--:r ../seed/materias.sql
 
 
 -- =========================================

@@ -6,11 +6,11 @@ CREATE TABLE EjemplarPrestamo (
 	idEstadoDevuelto INT,
 	fechaDevuelto DATE,
 
-	CONSTRAINT PK_EjemplarPrestamo PRIMARY KEY (idPrestamo, codISBN, numEjemplar),
+	CONSTRAINT PK_EjemplarPrestamo PRIMARY KEY (idPrestamo, numEjemplar, codISBN),
 
 	CONSTRAINT FK_EjemplarPrestamo_Prestamo FOREIGN KEY (idPrestamo) REFERENCES Prestamo(idPrestamo),
 
-	CONSTRAINT FK_EjemplarPrestamo_Ejemplar FOREIGN KEY (codISBN, numEjemplar) REFERENCES Ejemplar (codISBN, numEjemplar),
+	CONSTRAINT FK_EjemplarPrestamo_Ejemplar FOREIGN KEY (numEjemplar, codISBN) REFERENCES Ejemplar (numEjemplar, codISBN),
 	
 	CONSTRAINT FK_EjemplarPrestamo_Estado FOREIGN KEY (idEstadoDevuelto) REFERENCES Estado(idEstado),
 );
