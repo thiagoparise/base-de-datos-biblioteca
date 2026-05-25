@@ -1,0 +1,10 @@
+CREATE TABLE EdicionTema (
+	codISBN CHAR(13) NOT NULL,
+	idTema INT NOT NULL,
+
+	CONSTRAINT PK_EdicionTema PRIMARY KEY (codISBN, idTema),
+
+	CONSTRAINT FK_EdicionTema_Edicion FOREIGN KEY (codISBN) REFERENCES Edicion(codISBN),
+
+	CONSTRAINT FK_EdicionTema_Tema FOREIGN KEY (idTema) REFERENCES Tema(idTema)
+);

@@ -1,0 +1,11 @@
+CREATE TABLE Autor (
+	idAutor INT IDENTITY(1,1) NOT NULL,
+
+	nombre NVARCHAR(100) NOT NULL,
+	apellido NVARCHAR(100) NOT NULL,
+	nombreFantasia NVARCHAR(100) NOT NULL,
+	fechaNacimiento DATE NOT NULL,
+	biografia NVARCHAR(MAX) NOT NULL,
+
+	CONSTRAINT PK_Autor PRIMARY KEY (idAutor)
+)
