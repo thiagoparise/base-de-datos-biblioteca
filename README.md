@@ -4,6 +4,7 @@
 
 ## Índice
 - [Descripción del Proyecto](#descripcion-del-proyecto)
+- [Setup de Base de Datos] (#setup-base-de-datos)
 - [Base de Datos](#base-de-datos)
 - [Estructura del Proyecto](#estructura-del-proyecto)
 - [Documentación](#documentacion)
@@ -43,6 +44,61 @@ Sistema de Gestión de Biblioteca Universitaria implementado sobre **SQL Server*
 - 📬 **Notificación de nuevos libros** — Stored procedure que identifica a qué lectores avisar cuando se incorpora un libro, según si solicitaron todos los libros del mismo autor
 - 🗃️ **Estado de ejemplares** — Consulta por libro, autor, tema o profesor recomendante, con estado actual de cada ejemplar (en estantería, en préstamo, vencido, etc.)
 
+---
+
+<a id="setup-base-de-datos"></a>
+## ⚙️ Setup de base de datos
+
+### Requisitos previos
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) corriendo
+- [sqlcmd](https://learn.microsoft.com/es-es/sql/tools/sqlcmd/sqlcmd-utility) instalado y en el PATH
+- Archivo `.env` en la raíz del proyecto (ver `.env.example`)
+
+### Primera vez (o rebuild completo)
+
+```powershell
+.\setup_database.ps1
+```
+
+```bash
+.\setup_database.sh
+```
+
+Esto levanta el contenedor, crea la base de datos y recrea todas las tablas.
+
+### Opciones disponibles
+
+| Flag | Descripción |
+|------|-------------|
+| `-SkipDocker` | Omite el `docker compose up` (útil si el contenedor ya está corriendo) |
+| `-WithSeed` | Inserta los datos iniciales después de crear las tablas |
+
+**Ejemplos:**
+```powershell
+# Solo recrear tablas (contenedor ya corriendo)
+.\setup_database.ps1 -SkipDocker
+
+# Setup completo con datos de prueba
+.\setup_database.ps1 -WithSeed
+
+# Solo tablas + seed, sin Docker
+.\setup_database.ps1 -SkipDocker -WithSeed
+```
+
+### Solución de problemas
+
+**El script no se puede ejecutar**
+PowerShell puede bloquear scripts externos por política de ejecución. Ejecutar una vez:
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+
+**Error de conexión a SQL Server**
+Verificar que Docker Desktop esté corriendo y que el puerto en `.env` no esté ocupado.
+```powershell
+docker ps  # el contenedor debe aparecer como "Up"
+```
 ---
 
 <a id="base-de-datos"></a>
