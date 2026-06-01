@@ -1,11 +1,13 @@
 services:
   sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    # azure-sql-edge es multi-arch (amd64 + arm64): funciona en Windows, Intel Mac, Linux x86_64 y Apple Silicon.
+    # mssql/server:2022-latest solo tiene imagen amd64 y crashea en ARM con segfault.
+    image: mcr.microsoft.com/azure-sql-edge:latest
 
     container_name: biblioteca-sqlserver
 
     environment:
-      ACCEPT_EULA: "Y"
+      ACCEPT_EULA: "1"
       MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
 
     ports:
