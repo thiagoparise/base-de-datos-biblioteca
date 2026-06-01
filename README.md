@@ -62,28 +62,26 @@ Sistema de Gestión de Biblioteca Universitaria implementado sobre **SQL Server*
 ```
 
 ```bash
-.\setup_database.sh
+./setup_database.sh
 ```
 
 Esto levanta el contenedor, crea la base de datos y recrea todas las tablas.
 
 ### Opciones disponibles
 
-| Flag | Descripción |
-|------|-------------|
-| `-SkipDocker` | Omite el `docker compose up` (útil si el contenedor ya está corriendo) |
-| `-WithSeed` | Inserta los datos iniciales después de crear las tablas |
+| Flag (PowerShell) | Flag (bash) | Descripción |
+|---|---|---|
+| `-SkipDocker` | `--skip-docker` | Omite el `docker compose up` (útil si el contenedor ya está corriendo) |
 
 **Ejemplos:**
 ```powershell
 # Solo recrear tablas (contenedor ya corriendo)
 .\setup_database.ps1 -SkipDocker
+```
 
-# Setup completo con datos de prueba
-.\setup_database.ps1 -WithSeed
-
-# Solo tablas + seed, sin Docker
-.\setup_database.ps1 -SkipDocker -WithSeed
+```bash
+# Solo recrear tablas (contenedor ya corriendo)
+./setup_database.sh --skip-docker
 ```
 
 ### Solución de problemas
@@ -99,6 +97,10 @@ Verificar que Docker Desktop esté corriendo y que el puerto en `.env` no esté 
 ```powershell
 docker ps  # el contenedor debe aparecer como "Up"
 ```
+
+**Apple Silicon (M1/M2/M3): el contenedor falla al iniciar**
+`mssql/server` no tiene imagen ARM64 nativa y crashea bajo emulación. El proyecto usa `azure-sql-edge`, que sí soporta ARM64. Si al hacer pull ves que la imagen cambió respecto a lo que tenías, es para mantener compatibilidad con todos los equipos.
+
 ---
 
 <a id="base-de-datos"></a>
