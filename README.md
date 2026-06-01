@@ -67,21 +67,63 @@ Sistema de Gestión de Biblioteca Universitaria implementado sobre **SQL Server*
 
 Esto levanta el contenedor, crea la base de datos y recrea todas las tablas.
 
+### Datos de prueba (opcional)
+
+Para poblar la base de datos con registros listos para consultar:
+
+**1.** Asegurate de tener el contenedor corriendo:
+```bash
+docker ps  # debe aparecer biblioteca-sqlserver como "Up"
+```
+
+**2.** Corré el setup con el flag de seed (desde el root del repo):
+```powershell
+.\setup_database.ps1 -WithSeed
+```
+
+```bash
+./setup_database.sh --with-seed
+```
+
+**3.** Verificá que los datos se insertaron:
+```bash
+sqlcmd -S localhost,1433 -U sa -P Password123 -d biblioteca -C -Q "SELECT COUNT(*) FROM Libro"
+```
+
+El seed incluye:
+- 5 libros técnicos con sus autores, ediciones, temas y palabras clave
+- 10 lectores: 4 docentes, 4 alumnos y 2 graduados, con sus materias y recomendaciones
+- 6 préstamos: activos, vencidos y uno ya devuelto — útiles para probar vistas y consultas
+- 3 consultas en sala sobre el ejemplar único de *El Arte de la Programación de Computadoras*
+
 ### Opciones disponibles
 
 | Flag (PowerShell) | Flag (bash) | Descripción |
 |---|---|---|
 | `-SkipDocker` | `--skip-docker` | Omite el `docker compose up` (útil si el contenedor ya está corriendo) |
+| `-WithSeed` | `--with-seed` | Inserta los datos de prueba después de crear las tablas |
 
 **Ejemplos:**
 ```powershell
 # Solo recrear tablas (contenedor ya corriendo)
 .\setup_database.ps1 -SkipDocker
+
+# Setup completo con datos de prueba
+.\setup_database.ps1 -WithSeed
+
+# Solo tablas + seed, sin Docker
+.\setup_database.ps1 -SkipDocker -WithSeed
 ```
 
 ```bash
 # Solo recrear tablas (contenedor ya corriendo)
 ./setup_database.sh --skip-docker
+
+# Setup completo con datos de prueba
+./setup_database.sh --with-seed
+
+# Solo tablas + seed, sin Docker
+./setup_database.sh --skip-docker --with-seed
 ```
 
 ### Solución de problemas
@@ -98,7 +140,7 @@ Verificar que Docker Desktop esté corriendo y que el puerto en `.env` no esté 
 docker ps  # el contenedor debe aparecer como "Up"
 ```
 
-**Apple Silicon (M1/M2/M3): el contenedor falla al iniciar**
+**Apple Silicon (M1/M2/M3) o Linux ARM64: el contenedor falla al iniciar**
 `mssql/server` no tiene imagen ARM64 nativa y crashea bajo emulación. El proyecto usa `azure-sql-edge`, que sí soporta ARM64. Si al hacer pull ves que la imagen cambió respecto a lo que tenías, es para mantener compatibilidad con todos los equipos.
 
 ---
