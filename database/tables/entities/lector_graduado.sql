@@ -1,9 +1,9 @@
 CREATE TABLE LectorGraduado (
-	numLector INT NOT NULL,
+	num_lector INT NOT NULL,
 
-	fechaEgreso DATE NOT NULL,
+	fecha_egreso DATE NOT NULL,
 
-	CONSTRAINT PK_LectorGraduado PRIMARY KEY (numLector),
+	CONSTRAINT PK_LectorGraduado PRIMARY KEY (num_lector),
 
-	CONSTRAINT FK_LectorGraduado_Lector FOREIGN KEY (numLector) REFERENCES Lector(numLector)
+	CONSTRAINT FK_LectorGraduado_Lector FOREIGN KEY (num_lector) REFERENCES Lector(num_lector)
 );

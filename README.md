@@ -160,7 +160,7 @@ docker ps  # el contenedor debe aparecer como "Up"
 | `Ejemplar` | Copia física de una edición, con estado actual |
 | `Estanteria` | Zona física donde se ubican los ejemplares |
 | `Tema` | Temas principales de una edición |
-| `Palabra_Clave` | Palabras clave del contenido de una edición |
+| `PalabraClave` | Palabras clave del contenido de una edición |
 | `Lector` | Persona que puede realizar préstamos o consultas |
 | `LectorDocente` | Especialización de Lector para docentes |
 | `LectorAlumno` | Especialización de Lector para alumnos |
@@ -173,12 +173,13 @@ docker ps  # el contenedor debe aparecer como "Up"
 
 | Tabla | Relación |
 |---|---|
-| `Autor_Libro` | Autores de un libro (N:M) |
-| `Edicion_Tema` | Temas de una edición (N:M) |
-| `Edicion_Palabra` | Palabras clave de una edición (N:M) |
-| `Libro_Materia` | Bibliografía (obligatoria u optativa) de una materia (N:M) |
-| `Docente_Materia` | Materias dictadas por un docente (N:M) |
-| `Ejemplar_Prestamo` | Detalle de ejemplares incluidos en un préstamo |
+| `Escribe` | Autores de un libro \| Autor, Libro (N:M) |
+| `TrataSobre` | Temas de una edición \| Edicion, Tema (N:M) |
+| `SeDescribePor` | Palabras clave de una edición \| Edicion, PalabraClave (N:M) |
+| `EsBibliografiaDe` | Bibliografía (obligatoria u optativa) de una materia \| Libro, Materia (N:M) |
+| `Dicta` | Materias dictadas por un docente \| LectorDocente, Materia (N:M) |
+| `Recomendado` | Libros recomendados por un docente en una materia \| LectorDocente, Materia, Libro (N:M:P) |
+| `SeIncluyeEn` | Ejemplares incluidos en un préstamo \| Ejemplar, Prestamo (N:M) |
 
 ### Stored Procedures
 
@@ -210,15 +211,16 @@ database/
 │   │   ├── lector.sql
 │   │   └── ...
 │   └── relations/             # Tablas de relación N:M
-│       ├── autor_libro.sql
-│       ├── edicion_tema.sql
-│       ├── edicion_palabra.sql
-│       ├── libro_materia.sql
-│       └── docente_materia.sql
+│       ├── escribe.sql
+│       ├── trata_sobre.sql
+│       ├── se_describe_por.sql
+│       ├── es_bibliografia_de.sql
+│       ├── dicta.sql
+│       ├── se_incluye_en.sql
+│       └── recomendado.sql
 ├── procedures/                # Stored procedures
 ├── views/                     # Vistas
-├── seed/                      # Datos de prueba
-├── scripts/                   # Scripts utilitarios
+├── scripts/                   # Scripts utilitarios (init, rebuild, seed, drop)
 └── docs/                      # Documentación (MER, MR, supuestos)
 ```
 

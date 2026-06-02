@@ -15,13 +15,13 @@ PRINT '=========================================';
 -- TABLAS RELACIONALES
 -- =========================================
 
-DROP TABLE IF EXISTS EjemplarPrestamo;
+DROP TABLE IF EXISTS SeIncluyeEn;
 DROP TABLE IF EXISTS Recomendado;
-DROP TABLE IF EXISTS DocenteMateria;
-DROP TABLE IF EXISTS LibroMateria;
-DROP TABLE IF EXISTS EdicionPalabra;
-DROP TABLE IF EXISTS EdicionTema;
-DROP TABLE IF EXISTS AutorLibro;
+DROP TABLE IF EXISTS Dicta;
+DROP TABLE IF EXISTS EsBibliografiaDe;
+DROP TABLE IF EXISTS SeDescribePor;
+DROP TABLE IF EXISTS TrataSobre;
+DROP TABLE IF EXISTS Escribe;
 
 
 -- =========================================

@@ -1,10 +1,10 @@
 CREATE TABLE Prestamo (
-	idPrestamo INT IDENTITY(1,1) NOT NULL,
+	id_prestamo INT IDENTITY(1,1) NOT NULL,
 
-	numLector INT NOT NULL,
+	num_lector INT NOT NULL,
 
-	fechaRealizado DATE NOT NULL,
+	fecha_realizado DATE NOT NULL,
 
-	CONSTRAINT PK_Prestamo PRIMARY KEY (idPrestamo),
-	CONSTRAINT FK_Prestamo_Lector FOREIGN KEY (numLector) REFERENCES Lector(numLector)
+	CONSTRAINT PK_Prestamo PRIMARY KEY (id_prestamo),
+	CONSTRAINT FK_Prestamo_Lector FOREIGN KEY (num_lector) REFERENCES Lector(num_lector)
 );

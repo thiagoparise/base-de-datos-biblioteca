@@ -64,12 +64,12 @@ PRINT 'Creando tablas dependientes...';
 
 PRINT 'Creando tablas relacionales...';
 
-:r ../tables/relations/autor_libro.sql
-:r ../tables/relations/edicion_tema.sql
-:r ../tables/relations/edicion_palabra.sql
-:r ../tables/relations/libro_materia.sql
-:r ../tables/relations/docente_materia.sql
-:r ../tables/relations/ejemplar_prestamo.sql
+:r ../tables/relations/escribe.sql
+:r ../tables/relations/trata_sobre.sql
+:r ../tables/relations/se_describe_por.sql
+:r ../tables/relations/es_bibliografia_de.sql
+:r ../tables/relations/dicta.sql
+:r ../tables/relations/se_incluye_en.sql
 :r ../tables/relations/recomendado.sql
 
 

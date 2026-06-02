@@ -1,15 +1,15 @@
 CREATE TABLE Consulta (
-	idConsulta INT IDENTITY(1,1) NOT NULL,
+	id_consulta INT IDENTITY(1,1) NOT NULL,
 
-	fechaConsulta DATE NOT NULL,
+	fecha_consulta DATE NOT NULL,
 
-	codISBN CHAR(13) NOT NULL,
-	numEjemplar INT NOT NULL,
-	numLector INT NOT NULL,
+	cod_isbn CHAR(13) NOT NULL,
+	num_ejemplar INT NOT NULL,
+	num_lector INT NOT NULL,
 
-	CONSTRAINT PK_Consulta PRIMARY KEY (idConsulta),
+	CONSTRAINT PK_Consulta PRIMARY KEY (id_consulta),
 
-	CONSTRAINT FK_Consulta_Ejemplar FOREIGN KEY (numEjemplar, codISBN) REFERENCES Ejemplar(numEjemplar, codISBN),
+	CONSTRAINT FK_Consulta_Ejemplar FOREIGN KEY (num_ejemplar, cod_isbn) REFERENCES Ejemplar(num_ejemplar, cod_isbn),
 
-	CONSTRAINT FK_Consulta_Lector FOREIGN KEY (numLector) REFERENCES Lector(numLector)
+	CONSTRAINT FK_Consulta_Lector FOREIGN KEY (num_lector) REFERENCES Lector(num_lector)
 );

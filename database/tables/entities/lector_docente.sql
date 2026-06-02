@@ -1,7 +1,7 @@
 CREATE TABLE LectorDocente (
-	numLector INT NOT NULL,
+	num_lector INT NOT NULL,
 
-	CONSTRAINT PK_LectorDocente PRIMARY KEY (numLector),
+	CONSTRAINT PK_LectorDocente PRIMARY KEY (num_lector),
 
-	CONSTRAINT FK_LectorDocente_Lector FOREIGN KEY (numLector) REFERENCES Lector(numLector)
+	CONSTRAINT FK_LectorDocente_Lector FOREIGN KEY (num_lector) REFERENCES Lector(num_lector)
 );

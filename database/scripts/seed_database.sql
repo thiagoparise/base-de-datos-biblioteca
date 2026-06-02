@@ -13,11 +13,13 @@ PRINT '=========================================';
 
 PRINT 'Insertando estados...';
 
-INSERT INTO Estado (descripcion) VALUES
-    ('Disponible'),
-    ('Prestado'),
-    ('En Reparación'),
-    ('Dado de Baja');
+INSERT INTO Estado (descripcion_estado) VALUES
+    ('Perfecto'),        -- id_estado 1: sin marcas, como nuevo
+    ('Bueno'),           -- id_estado 2: desgaste normal por uso
+    ('Aceptable'),       -- id_estado 3: marcas o doblez menor, sigue siendo útil
+    ('Deteriorado'),     -- id_estado 4: daño visible: páginas sueltas, tapa dañada
+    ('Muy deteriorado'), -- id_estado 5: daño severo, uso limitado
+    ('Inutilizable');    -- id_estado 6: destruido, no puede circular
 
 
 PRINT 'Insertando idiomas...';
@@ -30,7 +32,7 @@ INSERT INTO Idioma (nombre) VALUES
 
 PRINT 'Insertando editoriales...';
 
-INSERT INTO Editorial (nombre) VALUES
+INSERT INTO Editorial (nombre_editorial) VALUES
     ('Pearson Educación'),
     ('McGraw-Hill'),
     ('Addison-Wesley'),
@@ -72,7 +74,7 @@ INSERT INTO PalabraClave (palabra) VALUES
 
 PRINT 'Insertando materias...';
 
-INSERT INTO Materia (nombre) VALUES
+INSERT INTO Materia (nombre_materia) VALUES
     ('Diseño de Base de Datos'),
     ('Algoritmos y Estructuras de Datos'),
     ('Redes de Computadoras'),
@@ -85,7 +87,7 @@ INSERT INTO Materia (nombre) VALUES
 
 PRINT 'Insertando autores...';
 
-INSERT INTO Autor (nombre, apellido, nombreFantasia, fechaNacimiento, biografia) VALUES
+INSERT INTO Autor (nombre, apellido, nombre_fantasia, fecha_nacimiento, biografia) VALUES
     ('Abraham',    'Silberschatz', 'Silberschatz', '1945-07-18', 'Profesor en Yale, co-autor del clásico Fundamentos de Bases de Datos.'),
     ('Henry F.',   'Korth',        'Korth',        '1951-03-15', 'Investigador y docente, co-autor de Fundamentos de Bases de Datos.'),
     ('Thomas H.',  'Cormen',       'Cormen',       '1956-06-10', 'Profesor en Dartmouth College, co-autor de Introducción a los Algoritmos.'),
@@ -95,22 +97,22 @@ INSERT INTO Autor (nombre, apellido, nombreFantasia, fechaNacimiento, biografia)
 
 
 PRINT 'Insertando libros...';
--- idEditorial: 1=Pearson, 2=McGraw-Hill, 3=Addison-Wesley, 4=Alfaomega
--- idIdioma:    1=Español, 2=Inglés, 3=Portugués
+-- id_editorial: 1=Pearson, 2=McGraw-Hill, 3=Addison-Wesley, 4=Alfaomega
+-- id_idioma:    1=Español, 2=Inglés, 3=Portugués
 
-INSERT INTO Libro (titulo, idEditorial, idIdioma) VALUES
-    ('Fundamentos de Bases de Datos',              1, 1),   -- idLibro 1
-    ('Introducción a los Algoritmos',              2, 1),   -- idLibro 2
-    ('Redes de Computadoras',                      1, 1),   -- idLibro 3
-    ('El Arte de la Programación de Computadoras', 3, 2),   -- idLibro 4
-    ('Diseño de Bases de Datos Relacionales',      4, 1);   -- idLibro 5
+INSERT INTO Libro (titulo, id_editorial, id_idioma) VALUES
+    ('Fundamentos de Bases de Datos',              1, 1),   -- id_libro 1
+    ('Introducción a los Algoritmos',              2, 1),   -- id_libro 2
+    ('Redes de Computadoras',                      1, 1),   -- id_libro 3
+    ('El Arte de la Programación de Computadoras', 3, 2),   -- id_libro 4
+    ('Diseño de Bases de Datos Relacionales',      4, 1);   -- id_libro 5
 
 
 PRINT 'Insertando ediciones...';
--- idEstanteria: 1=A Informática, 2=B Matemática, 3=C Física, 4=D General
--- indice:       número de edición
+-- id_estanteria: 1=A Informática, 2=B Matemática, 3=C Física, 4=D General
+-- indice:        número de edición
 
-INSERT INTO Edicion (codISBN, fechaPublicacion, indice, idLibro, idEstanteria) VALUES
+INSERT INTO Edicion (cod_isbn, fecha_publicacion, indice, id_libro, id_estanteria) VALUES
     ('9780078022159', '2011-01-01', 7, 1, 1),   -- Fundamentos BD, 7a ed
     ('9780131873254', '2006-01-01', 6, 1, 1),   -- Fundamentos BD, 6a ed
     ('9780262033848', '2009-07-31', 3, 2, 1),   -- Introducción Algoritmos, 3a ed
@@ -121,36 +123,36 @@ INSERT INTO Edicion (codISBN, fechaPublicacion, indice, idLibro, idEstanteria) V
 
 
 PRINT 'Insertando ejemplares...';
--- idEstado: 1=Disponible, 2=Prestado, 3=En Reparación, 4=Dado de Baja
+-- id_estado: 1=Perfecto, 2=Bueno, 3=Aceptable, 4=Deteriorado, 5=Muy deteriorado, 6=Inutilizable
 
 -- Fundamentos BD 7a ed (ISBN 9780078022159): 3 ejemplares
-INSERT INTO Ejemplar (codISBN, idEstado) VALUES ('9780078022159', 2);   -- numEjemplar  1: Prestado (préstamo vencido)
-INSERT INTO Ejemplar (codISBN, idEstado) VALUES ('9780078022159', 1);   -- numEjemplar  2: Disponible
-INSERT INTO Ejemplar (codISBN, idEstado) VALUES ('9780078022159', 1);   -- numEjemplar  3: Disponible
+INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780078022159', 1);   -- num_ejemplar  1: Perfecto
+INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780078022159', 2);   -- num_ejemplar  2: Bueno
+INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780078022159', 2);   -- num_ejemplar  3: Bueno
 
--- Fundamentos BD 6a ed (ISBN 9780131873254): 2 ejemplares
-INSERT INTO Ejemplar (codISBN, idEstado) VALUES ('9780131873254', 1);   -- numEjemplar  4: Disponible
-INSERT INTO Ejemplar (codISBN, idEstado) VALUES ('9780131873254', 1);   -- numEjemplar  5: Disponible
+-- Fundamentos BD 6a ed (ISBN 9780131873254): 2 ejemplares  (edición más antigua → más desgaste)
+INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780131873254', 3);   -- num_ejemplar  4: Aceptable
+INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780131873254', 4);   -- num_ejemplar  5: Deteriorado
 
 -- Introducción Algoritmos 3a ed (ISBN 9780262033848): 3 ejemplares
-INSERT INTO Ejemplar (codISBN, idEstado) VALUES ('9780262033848', 2);   -- numEjemplar  6: Prestado (préstamo vencido)
-INSERT INTO Ejemplar (codISBN, idEstado) VALUES ('9780262033848', 1);   -- numEjemplar  7: Disponible
-INSERT INTO Ejemplar (codISBN, idEstado) VALUES ('9780262033848', 1);   -- numEjemplar  8: Disponible
+INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780262033848', 2);   -- num_ejemplar  6: Bueno
+INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780262033848', 1);   -- num_ejemplar  7: Perfecto
+INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780262033848', 2);   -- num_ejemplar  8: Bueno
 
 -- Redes de Computadoras 5a ed (ISBN 9780132126953): 2 ejemplares
-INSERT INTO Ejemplar (codISBN, idEstado) VALUES ('9780132126953', 1);   -- numEjemplar  9: Disponible
-INSERT INTO Ejemplar (codISBN, idEstado) VALUES ('9780132126953', 3);   -- numEjemplar 10: En Reparación
+INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780132126953', 2);   -- num_ejemplar  9: Bueno
+INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780132126953', 4);   -- num_ejemplar 10: Deteriorado (en reparación)
 
 -- El Arte de la Programación Vol. 1 (ISBN 9780201485417): 1 ejemplar — único → habilita consultas en sala
-INSERT INTO Ejemplar (codISBN, idEstado) VALUES ('9780201485417', 1);   -- numEjemplar 11: Disponible
+INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780201485417', 3);   -- num_ejemplar 11: Aceptable (libro de 1968)
 
 -- Diseño BD Relacionales 1a ed (ISBN 9789587780246): 2 ejemplares
-INSERT INTO Ejemplar (codISBN, idEstado) VALUES ('9789587780246', 2);   -- numEjemplar 12: Prestado (préstamo vencido)
-INSERT INTO Ejemplar (codISBN, idEstado) VALUES ('9789587780246', 2);   -- numEjemplar 13: Prestado (préstamo vencido)
+INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9789587780246', 2);   -- num_ejemplar 12: Bueno
+INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9789587780246', 2);   -- num_ejemplar 13: Bueno
 
--- Introducción Algoritmos 4a ed (ISBN 9780262046305): 2 ejemplares
-INSERT INTO Ejemplar (codISBN, idEstado) VALUES ('9780262046305', 1);   -- numEjemplar 14: Disponible (préstamo devuelto)
-INSERT INTO Ejemplar (codISBN, idEstado) VALUES ('9780262046305', 2);   -- numEjemplar 15: Prestado (préstamo activo)
+-- Introducción Algoritmos 4a ed (ISBN 9780262046305): 2 ejemplares  (edición reciente → mejor estado)
+INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780262046305', 1);   -- num_ejemplar 14: Perfecto
+INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780262046305', 1);   -- num_ejemplar 15: Perfecto
 
 
 -- =========================================
@@ -161,26 +163,26 @@ PRINT 'Insertando lectores...';
 -- cuil: NCHAR(11) sin guiones
 
 INSERT INTO Lector (nombre, apellido, cuil, telefono) VALUES
-    ('María',     'González',  '27301234560', '2235410001'),   -- numLector  1 → Docente
-    ('Carlos',    'Rodríguez', '20256789012', '2235410002'),   -- numLector  2 → Docente
-    ('Ana',       'Martínez',  '27345678901', '2235410003'),   -- numLector  3 → Docente
-    ('Luis',      'Fernández', '20456789013', '2235410004'),   -- numLector  4 → Docente
-    ('Sofía',     'López',     '27567890124', '2235410005'),   -- numLector  5 → Alumno
-    ('Diego',     'Sánchez',   '20678901235', '2235410006'),   -- numLector  6 → Alumno
-    ('Valentina', 'Torres',    '27789012346', '2235410007'),   -- numLector  7 → Alumno
-    ('Martín',    'Pérez',     '20890123457', '2235410008'),   -- numLector  8 → Alumno
-    ('Florencia', 'Gómez',     '27901234568', '2235410009'),   -- numLector  9 → Graduado
-    ('Javier',    'Díaz',      '20012345679', '2235410010');   -- numLector 10 → Graduado
+    ('María',     'González',  '27301234560', '2235410001'),   -- num_lector  1 → Docente
+    ('Carlos',    'Rodríguez', '20256789012', '2235410002'),   -- num_lector  2 → Docente
+    ('Ana',       'Martínez',  '27345678901', '2235410003'),   -- num_lector  3 → Docente
+    ('Luis',      'Fernández', '20456789013', '2235410004'),   -- num_lector  4 → Docente
+    ('Sofía',     'López',     '27567890124', '2235410005'),   -- num_lector  5 → Alumno
+    ('Diego',     'Sánchez',   '20678901235', '2235410006'),   -- num_lector  6 → Alumno
+    ('Valentina', 'Torres',    '27789012346', '2235410007'),   -- num_lector  7 → Alumno
+    ('Martín',    'Pérez',     '20890123457', '2235410008'),   -- num_lector  8 → Alumno
+    ('Florencia', 'Gómez',     '27901234568', '2235410009'),   -- num_lector  9 → Graduado
+    ('Javier',    'Díaz',      '20012345679', '2235410010');   -- num_lector 10 → Graduado
 
 
 PRINT 'Insertando docentes...';
 
-INSERT INTO LectorDocente (numLector) VALUES (1), (2), (3), (4);
+INSERT INTO LectorDocente (num_lector) VALUES (1), (2), (3), (4);
 
 
 PRINT 'Insertando alumnos...';
 
-INSERT INTO LectorAlumno (numLector, libreta) VALUES
+INSERT INTO LectorAlumno (num_lector, libreta) VALUES
     (5, 'LU-12345'),
     (6, 'LU-23456'),
     (7, 'LU-34567'),
@@ -189,7 +191,7 @@ INSERT INTO LectorAlumno (numLector, libreta) VALUES
 
 PRINT 'Insertando graduados...';
 
-INSERT INTO LectorGraduado (numLector, fechaEgreso) VALUES
+INSERT INTO LectorGraduado (num_lector, fecha_egreso) VALUES
     (9,  '2022-12-15'),
     (10, '2020-06-30');
 
@@ -200,7 +202,7 @@ INSERT INTO LectorGraduado (numLector, fechaEgreso) VALUES
 
 PRINT 'Insertando relaciones autor-libro...';
 
-INSERT INTO AutorLibro (idAutor, idLibro) VALUES
+INSERT INTO Escribe (id_autor, id_libro) VALUES
     (1, 1),   -- Silberschatz → Fundamentos BD
     (2, 1),   -- Korth        → Fundamentos BD
     (3, 2),   -- Cormen       → Introducción Algoritmos
@@ -212,7 +214,7 @@ INSERT INTO AutorLibro (idAutor, idLibro) VALUES
 
 PRINT 'Insertando relaciones edición-tema...';
 
-INSERT INTO EdicionTema (codISBN, idTema) VALUES
+INSERT INTO TrataSobre (cod_isbn, id_tema) VALUES
     ('9780078022159', 1),   -- Fundamentos BD 7a → Base de Datos
     ('9780078022159', 6),   -- Fundamentos BD 7a → Ingeniería de Software
     ('9780131873254', 1),   -- Fundamentos BD 6a → Base de Datos
@@ -227,7 +229,7 @@ INSERT INTO EdicionTema (codISBN, idTema) VALUES
 
 PRINT 'Insertando relaciones edición-palabra clave...';
 
-INSERT INTO EdicionPalabra (codISBN, idPalabraClave) VALUES
+INSERT INTO SeDescribePor (cod_isbn, id_palabra_clave) VALUES
     ('9780078022159', 1),   -- Fundamentos BD 7a → SQL
     ('9780078022159', 2),   -- Fundamentos BD 7a → Normalización
     ('9780131873254', 1),   -- Fundamentos BD 6a → SQL
@@ -248,10 +250,10 @@ INSERT INTO EdicionPalabra (codISBN, idPalabraClave) VALUES
 
 
 PRINT 'Insertando materias dictadas por docentes...';
--- numLector: 1=María, 2=Carlos, 3=Ana, 4=Luis
--- idMateria:  1=Diseño BD, 2=Algoritmos, 3=Redes, 4=Análisis Mat.
+-- num_lector: 1=María, 2=Carlos, 3=Ana, 4=Luis
+-- id_materia:  1=Diseño BD, 2=Algoritmos, 3=Redes, 4=Análisis Mat.
 
-INSERT INTO DocenteMateria (numLector, idMateria) VALUES
+INSERT INTO Dicta (num_lector, id_materia) VALUES
     (1, 1),   -- María  → Diseño BD
     (1, 2),   -- María  → Algoritmos
     (2, 1),   -- Carlos → Diseño BD
@@ -262,9 +264,9 @@ INSERT INTO DocenteMateria (numLector, idMateria) VALUES
 
 
 PRINT 'Insertando bibliografía de materias...';
--- esObligatorio: 1=sí, 0=no
+-- es_obligatorio: 1=sí, 0=no
 
-INSERT INTO LibroMateria (idLibro, idMateria, esObligatorio) VALUES
+INSERT INTO EsBibliografiaDe (id_libro, id_materia, es_obligatorio) VALUES
     (1, 1, 1),   -- Fundamentos BD      → Diseño BD (obligatorio)
     (5, 1, 1),   -- Diseño BD Rel.      → Diseño BD (obligatorio)
     (1, 2, 0),   -- Fundamentos BD      → Algoritmos (optativo)
@@ -275,7 +277,7 @@ INSERT INTO LibroMateria (idLibro, idMateria, esObligatorio) VALUES
 
 PRINT 'Insertando libros recomendados por docentes...';
 
-INSERT INTO Recomendado (numLector, idMateria, idLibro) VALUES
+INSERT INTO Recomendado (num_lector, id_materia, id_libro) VALUES
     (1, 1, 1),   -- María  recomienda Fundamentos BD     en Diseño BD
     (1, 1, 5),   -- María  recomienda Diseño BD Rel.     en Diseño BD
     (2, 1, 1),   -- Carlos recomienda Fundamentos BD     en Diseño BD
@@ -289,30 +291,30 @@ INSERT INTO Recomendado (numLector, idMateria, idLibro) VALUES
 PRINT 'Insertando préstamos...';
 -- Vencimiento: docentes = 14 días, alumnos/graduados = 7 días
 
-INSERT INTO Prestamo (numLector, fechaRealizado) VALUES
-    (1, '2026-01-10'),   -- idPrestamo 1: María      (docente)   → vencido (límite 2026-01-24)
-    (5, '2026-02-01'),   -- idPrestamo 2: Sofía      (alumno)    → vencido (límite 2026-02-08)
-    (9, '2026-03-15'),   -- idPrestamo 3: Florencia  (graduado)  → vencido (límite 2026-03-22)
-    (2, '2026-05-10'),   -- idPrestamo 4: Carlos     (docente)   → devuelto
-    (6, '2026-05-28'),   -- idPrestamo 5: Diego      (alumno)    → activo  (límite 2026-06-04)
-    (8, '2026-04-15');   -- idPrestamo 6: Martín     (alumno)    → vencido (límite 2026-04-22)
+INSERT INTO Prestamo (num_lector, fecha_realizado) VALUES
+    (1, '2026-01-10'),   -- id_prestamo 1: María      (docente)   → vencido (límite 2026-01-24)
+    (5, '2026-02-01'),   -- id_prestamo 2: Sofía      (alumno)    → vencido (límite 2026-02-08)
+    (9, '2026-03-15'),   -- id_prestamo 3: Florencia  (graduado)  → vencido (límite 2026-03-22)
+    (2, '2026-05-10'),   -- id_prestamo 4: Carlos     (docente)   → devuelto
+    (6, '2026-05-28'),   -- id_prestamo 5: Diego      (alumno)    → activo  (límite 2026-06-04)
+    (8, '2026-04-15');   -- id_prestamo 6: Martín     (alumno)    → vencido (límite 2026-04-22)
 
 
 PRINT 'Insertando detalle de ejemplares por préstamo...';
 
-INSERT INTO EjemplarPrestamo (idPrestamo, codISBN, numEjemplar, idEstadoDevuelto, fechaDevuelto) VALUES
-    (1, '9780078022159', 1,  NULL, NULL),            -- Préstamo 1: activo/vencido
-    (2, '9780262033848', 6,  NULL, NULL),            -- Préstamo 2: activo/vencido
-    (3, '9789587780246', 12, NULL, NULL),            -- Préstamo 3: activo/vencido
-    (4, '9780262046305', 14, 1,   '2026-05-20'),     -- Préstamo 4: devuelto (estado Disponible)
-    (5, '9780262046305', 15, NULL, NULL),            -- Préstamo 5: activo
-    (6, '9789587780246', 13, NULL, NULL);            -- Préstamo 6: activo/vencido
+INSERT INTO SeIncluyeEn (id_prestamo, cod_isbn, num_ejemplar, id_estado_devuelto, fecha_devuelto) VALUES
+    (1, '9780078022159', 1,  NULL, NULL),         -- Préstamo 1: no devuelto (vencido)
+    (2, '9780262033848', 6,  NULL, NULL),         -- Préstamo 2: no devuelto (vencido)
+    (3, '9789587780246', 12, NULL, NULL),         -- Préstamo 3: no devuelto (vencido)
+    (4, '9780262046305', 14, 1,   '2026-05-20'), -- Préstamo 4: devuelto en estado Perfecto
+    (5, '9780262046305', 15, NULL, NULL),         -- Préstamo 5: activo
+    (6, '9789587780246', 13, NULL, NULL);         -- Préstamo 6: no devuelto (vencido)
 
 
 PRINT 'Insertando consultas en sala...';
--- Solo para ediciones con ejemplar único (ISBN 9780201485417, numEjemplar 11)
+-- Solo para ediciones con ejemplar único (ISBN 9780201485417, num_ejemplar 11)
 
-INSERT INTO Consulta (fechaConsulta, codISBN, numEjemplar, numLector) VALUES
+INSERT INTO Consulta (fecha_consulta, cod_isbn, num_ejemplar, num_lector) VALUES
     ('2026-04-10', '9780201485417', 11, 7),    -- Valentina (alumno)
     ('2026-05-15', '9780201485417', 11, 3),    -- Ana       (docente)
     ('2026-05-20', '9780201485417', 11, 10);   -- Javier    (graduado)

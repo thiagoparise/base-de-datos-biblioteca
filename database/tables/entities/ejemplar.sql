@@ -1,13 +1,13 @@
 CREATE TABLE Ejemplar (
-	numEjemplar INT IDENTITY(1,1),
+	num_ejemplar INT IDENTITY(1,1),
 
-	codISBN CHAR(13) NOT NULL,
+	cod_isbn CHAR(13) NOT NULL,
 
-	idEstado INT NOT NULL,
+	id_estado INT NOT NULL,
 
-	CONSTRAINT PK_Ejemplar PRIMARY KEY (numEjemplar, codISBN), -- Analizar si la PK podría ser unicamente numEjemplar 
+	CONSTRAINT PK_Ejemplar PRIMARY KEY (num_ejemplar, cod_isbn),
 
-	CONSTRAINT FK_Ejemplar_Estado FOREIGN KEY (idEstado) REFERENCES Estado(idEstado),
+	CONSTRAINT FK_Ejemplar_Estado FOREIGN KEY (id_estado) REFERENCES Estado(id_estado),
 
-	CONSTRAINT FK_Ejemplar_Edicion FOREIGN KEY (codISBN) REFERENCES Edicion(codISBN)
+	CONSTRAINT FK_Ejemplar_Edicion FOREIGN KEY (cod_isbn) REFERENCES Edicion(cod_isbn)
 );

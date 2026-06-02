@@ -1,9 +1,9 @@
 CREATE TABLE LectorAlumno (
-	numLector INT NOT NULL,
+	num_lector INT NOT NULL,
 
-	libreta NVARCHAR(100) NOT NULL, -- libreta debería ser una entidad?
+	libreta NVARCHAR(100) NOT NULL,
 
-	CONSTRAINT PK_LectorAlumno PRIMARY KEY (numLector),
+	CONSTRAINT PK_LectorAlumno PRIMARY KEY (num_lector),
 
-	CONSTRAINT FK_LectorAlumno_Lector FOREIGN KEY (numLector) REFERENCES Lector(numLector)
+	CONSTRAINT FK_LectorAlumno_Lector FOREIGN KEY (num_lector) REFERENCES Lector(num_lector)
 );

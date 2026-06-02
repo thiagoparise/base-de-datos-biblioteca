@@ -1,11 +1,11 @@
 CREATE TABLE Recomendado (
-	numLector INT NOT NULL,
-	idMateria INT NOT NULL,
-	idLibro INT NOT NULL,
+	num_lector INT NOT NULL,
+	id_materia INT NOT NULL,
+	id_libro INT NOT NULL,
 
-	CONSTRAINT PK_Recomendado PRIMARY KEY (numLector, idMateria, idLibro),
+	CONSTRAINT PK_Recomendado PRIMARY KEY (num_lector, id_materia, id_libro),
 
-	CONSTRAINT FK_Recomendado_DocenteMateria FOREIGN KEY (numLector, idMateria) REFERENCES DocenteMateria(numLector, idMateria),
+	CONSTRAINT FK_Recomendado_Dicta FOREIGN KEY (num_lector, id_materia) REFERENCES Dicta(num_lector, id_materia),
 
-	CONSTRAINT FK_Recomendado_Libro FOREIGN KEY (idLibro) REFERENCES Libro(idLibro)
+	CONSTRAINT FK_Recomendado_Libro FOREIGN KEY (id_libro) REFERENCES Libro(id_libro)
 );
