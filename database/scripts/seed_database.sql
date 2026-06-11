@@ -123,36 +123,37 @@ INSERT INTO Edicion (cod_isbn, fecha_publicacion, indice, id_libro, id_estanteri
 
 
 PRINT 'Insertando ejemplares...';
--- id_estado: 1=Perfecto, 2=Bueno, 3=Aceptable, 4=Deteriorado, 5=Muy deteriorado, 6=Inutilizable
+-- id_estado:  1=Perfecto, 2=Bueno, 3=Aceptable, 4=Deteriorado, 5=Muy deteriorado, 6=Inutilizable
+-- disponible: 1=libre para préstamo, 0=ocupado (prestado). Coherente con los préstamos seedeados más abajo.
 
 -- Fundamentos BD 7a ed (ISBN 9780078022159): 3 ejemplares
-INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780078022159', 1);   -- num_ejemplar  1: Perfecto
-INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780078022159', 2);   -- num_ejemplar  2: Bueno
-INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780078022159', 2);   -- num_ejemplar  3: Bueno
+INSERT INTO Ejemplar (cod_isbn, id_estado, disponible) VALUES ('9780078022159', 1, 0);   -- num_ejemplar  1: Perfecto    | ocupado (préstamo 1)
+INSERT INTO Ejemplar (cod_isbn, id_estado, disponible) VALUES ('9780078022159', 2, 1);   -- num_ejemplar  2: Bueno       | libre
+INSERT INTO Ejemplar (cod_isbn, id_estado, disponible) VALUES ('9780078022159', 2, 1);   -- num_ejemplar  3: Bueno       | libre
 
 -- Fundamentos BD 6a ed (ISBN 9780131873254): 2 ejemplares  (edición más antigua → más desgaste)
-INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780131873254', 3);   -- num_ejemplar  4: Aceptable
-INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780131873254', 4);   -- num_ejemplar  5: Deteriorado
+INSERT INTO Ejemplar (cod_isbn, id_estado, disponible) VALUES ('9780131873254', 3, 1);   -- num_ejemplar  4: Aceptable   | libre
+INSERT INTO Ejemplar (cod_isbn, id_estado, disponible) VALUES ('9780131873254', 4, 1);   -- num_ejemplar  5: Deteriorado | libre
 
 -- Introducción Algoritmos 3a ed (ISBN 9780262033848): 3 ejemplares
-INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780262033848', 2);   -- num_ejemplar  6: Bueno
-INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780262033848', 1);   -- num_ejemplar  7: Perfecto
-INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780262033848', 2);   -- num_ejemplar  8: Bueno
+INSERT INTO Ejemplar (cod_isbn, id_estado, disponible) VALUES ('9780262033848', 2, 0);   -- num_ejemplar  6: Bueno       | ocupado (préstamo 2)
+INSERT INTO Ejemplar (cod_isbn, id_estado, disponible) VALUES ('9780262033848', 1, 1);   -- num_ejemplar  7: Perfecto    | libre
+INSERT INTO Ejemplar (cod_isbn, id_estado, disponible) VALUES ('9780262033848', 2, 1);   -- num_ejemplar  8: Bueno       | libre
 
 -- Redes de Computadoras 5a ed (ISBN 9780132126953): 2 ejemplares
-INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780132126953', 2);   -- num_ejemplar  9: Bueno
-INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780132126953', 4);   -- num_ejemplar 10: Deteriorado (en reparación)
+INSERT INTO Ejemplar (cod_isbn, id_estado, disponible) VALUES ('9780132126953', 2, 1);   -- num_ejemplar  9: Bueno       | libre
+INSERT INTO Ejemplar (cod_isbn, id_estado, disponible) VALUES ('9780132126953', 4, 1);   -- num_ejemplar 10: Deteriorado | libre (en reparación; el estado físico es ortogonal a la disponibilidad para préstamo)
 
 -- El Arte de la Programación Vol. 1 (ISBN 9780201485417): 1 ejemplar — único → habilita consultas en sala
-INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780201485417', 3);   -- num_ejemplar 11: Aceptable (libro de 1968)
+INSERT INTO Ejemplar (cod_isbn, id_estado, disponible) VALUES ('9780201485417', 3, 1);   -- num_ejemplar 11: Aceptable   | libre (las consultas en sala no ocupan el ejemplar a nivel disponible)
 
 -- Diseño BD Relacionales 1a ed (ISBN 9789587780246): 2 ejemplares
-INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9789587780246', 2);   -- num_ejemplar 12: Bueno
-INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9789587780246', 2);   -- num_ejemplar 13: Bueno
+INSERT INTO Ejemplar (cod_isbn, id_estado, disponible) VALUES ('9789587780246', 2, 0);   -- num_ejemplar 12: Bueno       | ocupado (préstamo 3)
+INSERT INTO Ejemplar (cod_isbn, id_estado, disponible) VALUES ('9789587780246', 2, 0);   -- num_ejemplar 13: Bueno       | ocupado (préstamo 6)
 
 -- Introducción Algoritmos 4a ed (ISBN 9780262046305): 2 ejemplares  (edición reciente → mejor estado)
-INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780262046305', 1);   -- num_ejemplar 14: Perfecto
-INSERT INTO Ejemplar (cod_isbn, id_estado) VALUES ('9780262046305', 1);   -- num_ejemplar 15: Perfecto
+INSERT INTO Ejemplar (cod_isbn, id_estado, disponible) VALUES ('9780262046305', 1, 1);   -- num_ejemplar 14: Perfecto    | libre (préstamo 4 ya devuelto)
+INSERT INTO Ejemplar (cod_isbn, id_estado, disponible) VALUES ('9780262046305', 1, 0);   -- num_ejemplar 15: Perfecto    | ocupado (préstamo 5)
 
 
 -- =========================================
