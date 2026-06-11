@@ -74,16 +74,23 @@ PRINT 'Creando tablas relacionales...';
 
 
 -- =========================================
--- SEED DATA
+-- VIEWS
 -- =========================================
 
---PRINT 'Insertando datos iniciales...';
+PRINT 'Creando vistas...';
+GO
+:r ../views/vw_prestamos_activos.sql
+GO
 
---:r ../seed/idiomas.sql
---:r ../seed/estados.sql
---:r ../seed/temas.sql
---:r ../seed/editoriales.sql
---:r ../seed/materias.sql
+
+-- =========================================
+-- STORED PROCEDURES
+-- =========================================
+
+PRINT 'Creando stored procedures...';
+GO
+:r ../procedures/sp_prestamos_vencidos_a_fecha.sql
+GO
 
 
 -- =========================================
