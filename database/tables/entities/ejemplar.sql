@@ -4,6 +4,7 @@ CREATE TABLE Ejemplar (
 	cod_isbn CHAR(13) NOT NULL,
 
 	id_estado INT NOT NULL,
+	disponible BIT NOT NULL DEFAULT 1,   -- 1 = disponible para préstamo, 0 = ocupado
 
 	CONSTRAINT PK_Ejemplar PRIMARY KEY (num_ejemplar, cod_isbn),
 
