@@ -128,33 +128,33 @@ PRINT 'Insertando ejemplares...';
 -- disponible:   1=libre para préstamo, 0=ocupado. Coherente con los préstamos seedeados más abajo.
 
 -- Fundamentos BD 7a ed (ISBN 9780078022159): 3 ejemplares
-INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (1, '9780078022159', 1, 0);   -- Perfecto    | ocupado (préstamo 1)
-INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (2, '9780078022159', 2, 1);   -- Bueno       | libre
-INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (3, '9780078022159', 2, 1);   -- Bueno       | libre
+INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (1, '9780078022159', 1, 0);   -- Perfecto    | ocupado (P1)
+INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (2, '9780078022159', 2, 0);   -- Bueno       | ocupado (P6 — historial: también pasó por P8 en 2025, ya devuelto)
+INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (3, '9780078022159', 2, 1);   -- Bueno       | libre (P4 ya devuelto)
 
 -- Fundamentos BD 6a ed (ISBN 9780131873254): 2 ejemplares  (edición más antigua → más desgaste)
-INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (1, '9780131873254', 3, 1);   -- Aceptable   | libre
-INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (2, '9780131873254', 4, 1);   -- Deteriorado | libre
+INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (1, '9780131873254', 3, 0);   -- Aceptable   | ocupado (P1)
+INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (2, '9780131873254', 4, 1);   -- Deteriorado | libre (P4 ya devuelto)
 
 -- Introducción Algoritmos 3a ed (ISBN 9780262033848): 3 ejemplares
-INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (1, '9780262033848', 2, 0);   -- Bueno       | ocupado (préstamo 2)
-INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (2, '9780262033848', 1, 1);   -- Perfecto    | libre
-INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (3, '9780262033848', 2, 1);   -- Bueno       | libre
+INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (1, '9780262033848', 2, 0);   -- Bueno       | ocupado (P2)
+INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (2, '9780262033848', 1, 1);   -- Perfecto    | libre (P7 en 2025 y P4 en 2026 ya devueltos)
+INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (3, '9780262033848', 2, 0);   -- Bueno       | ocupado (P3)
 
 -- Redes de Computadoras 5a ed (ISBN 9780132126953): 2 ejemplares
-INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (1, '9780132126953', 2, 1);   -- Bueno       | libre
+INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (1, '9780132126953', 2, 0);   -- Bueno       | ocupado (P3)
 INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (2, '9780132126953', 4, 1);   -- Deteriorado | libre (en reparación; el estado físico es ortogonal a la disponibilidad)
 
 -- El Arte de la Programación Vol. 1 (ISBN 9780201485417): 1 ejemplar — único → habilita consultas en sala
 INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (1, '9780201485417', 3, 1);   -- Aceptable   | libre (las consultas en sala no ocupan el ejemplar a nivel disponible)
 
 -- Diseño BD Relacionales 1a ed (ISBN 9789587780246): 2 ejemplares
-INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (1, '9789587780246', 2, 0);   -- Bueno       | ocupado (préstamo 3)
-INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (2, '9789587780246', 2, 0);   -- Bueno       | ocupado (préstamo 6)
+INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (1, '9789587780246', 2, 0);   -- Bueno       | ocupado (P3)
+INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (2, '9789587780246', 2, 0);   -- Bueno       | ocupado (P6)
 
 -- Introducción Algoritmos 4a ed (ISBN 9780262046305): 2 ejemplares  (edición reciente → mejor estado)
-INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (1, '9780262046305', 1, 1);   -- Perfecto    | libre (préstamo 4 ya devuelto)
-INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (2, '9780262046305', 1, 0);   -- Perfecto    | ocupado (préstamo 5)
+INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (1, '9780262046305', 1, 1);   -- Perfecto    | libre (P4 ya devuelto)
+INSERT INTO Ejemplar (num_ejemplar, cod_isbn, id_estado, disponible) VALUES (2, '9780262046305', 1, 0);   -- Perfecto    | ocupado (P5)
 
 
 -- =========================================
@@ -294,23 +294,49 @@ PRINT 'Insertando préstamos...';
 -- Vencimiento: docentes = 14 días, alumnos/graduados = 7 días
 
 INSERT INTO Prestamo (num_lector, fecha_realizado) VALUES
-    (1, '2026-01-10'),   -- id_prestamo 1: María      (docente)   → vencido (límite 2026-01-24)
-    (5, '2026-02-01'),   -- id_prestamo 2: Sofía      (alumno)    → vencido (límite 2026-02-08)
-    (9, '2026-03-15'),   -- id_prestamo 3: Florencia  (graduado)  → vencido (límite 2026-03-22)
-    (2, '2026-05-10'),   -- id_prestamo 4: Carlos     (docente)   → devuelto
-    (6, '2026-05-28'),   -- id_prestamo 5: Diego      (alumno)    → activo  (límite 2026-06-04)
-    (8, '2026-04-15');   -- id_prestamo 6: Martín     (alumno)    → vencido (límite 2026-04-22)
+    (1, '2026-01-10'),   -- P1: María      (docente)   → 2 ejemplares, vencido (límite 2026-01-24)
+    (5, '2026-02-01'),   -- P2: Sofía      (alumno)    → 1 ejemplar,  vencido (límite 2026-02-08)
+    (9, '2026-03-15'),   -- P3: Florencia  (graduado)  → 3 ejemplares, vencido (límite 2026-03-22)
+    (2, '2026-05-10'),   -- P4: Carlos     (docente)   → 4 ejemplares, devueltos
+    (6, '2026-05-28'),   -- P5: Diego      (alumno)    → 1 ejemplar,  activo  (límite 2026-06-04)
+    (8, '2026-04-15'),   -- P6: Martín     (alumno)    → 2 ejemplares, vencido (límite 2026-04-22)
+    (3, '2025-03-15'),   -- P7: Ana        (docente)   → 1 ejemplar,  devuelto en 2025 (para comparativa interanual)
+    (4, '2025-01-20');   -- P8: Luis       (docente)   → 1 ejemplar,  devuelto en 2025 (para comparativa interanual)
 
 
 PRINT 'Insertando detalle de ejemplares por préstamo...';
 
 INSERT INTO SeIncluyeEn (id_prestamo, cod_isbn, num_ejemplar, id_estado_devuelto, fecha_devuelto) VALUES
-    (1, '9780078022159', 1, NULL, NULL),         -- Préstamo 1: no devuelto (vencido)
-    (2, '9780262033848', 1, NULL, NULL),         -- Préstamo 2: no devuelto (vencido)
-    (3, '9789587780246', 1, NULL, NULL),         -- Préstamo 3: no devuelto (vencido)
-    (4, '9780262046305', 1, 1,    '2026-05-20'), -- Préstamo 4: devuelto en estado Perfecto
-    (5, '9780262046305', 2, NULL, NULL),         -- Préstamo 5: activo
-    (6, '9789587780246', 2, NULL, NULL);         -- Préstamo 6: no devuelto (vencido)
+    -- P1: María (docente) — 2 ejemplares activos, vencidos
+    (1, '9780078022159', 1, NULL, NULL),         -- Fundamentos BD 7a
+    (1, '9780131873254', 1, NULL, NULL),         -- Fundamentos BD 6a (otra edición del mismo libro, cod_isbn distinto → permitido)
+
+    -- P2: Sofía (alumno) — 1 ejemplar activo, vencido
+    (2, '9780262033848', 1, NULL, NULL),         -- Algoritmos 3a
+
+    -- P3: Florencia (graduado) — 3 ejemplares activos, todos vencidos
+    (3, '9789587780246', 1, NULL, NULL),         -- Diseño BD Relacionales
+    (3, '9780132126953', 1, NULL, NULL),         -- Redes 5a
+    (3, '9780262033848', 3, NULL, NULL),         -- Algoritmos 3a (ejemplar 3)
+
+    -- P4: Carlos (docente) — 4 ejemplares, todos devueltos (con estados variados)
+    (4, '9780262046305', 1, 1,    '2026-05-20'), -- Algoritmos 4a   → Perfecto
+    (4, '9780078022159', 3, 2,    '2026-05-20'), -- Fundamentos BD 7a → Bueno
+    (4, '9780262033848', 2, 1,    '2026-05-22'), -- Algoritmos 3a   → Perfecto
+    (4, '9780131873254', 2, 3,    '2026-05-22'), -- Fundamentos BD 6a → Aceptable
+
+    -- P5: Diego (alumno) — 1 ejemplar activo
+    (5, '9780262046305', 2, NULL, NULL),         -- Algoritmos 4a
+
+    -- P6: Martín (alumno) — 2 ejemplares activos, vencidos
+    (6, '9789587780246', 2, NULL, NULL),         -- Diseño BD Relacionales
+    (6, '9780078022159', 2, NULL, NULL),         -- Fundamentos BD 7a
+
+    -- P7: Ana (docente, 2025-03-15) — 1 ejemplar devuelto (interanual)
+    (7, '9780262033848', 2, 2,    '2025-03-25'), -- Algoritmos 3a → Bueno
+
+    -- P8: Luis (docente, 2025-01-20) — 1 ejemplar devuelto (interanual)
+    (8, '9780078022159', 2, 1,    '2025-02-01'); -- Fundamentos BD 7a → Perfecto
 
 
 PRINT 'Insertando consultas en sala...';
