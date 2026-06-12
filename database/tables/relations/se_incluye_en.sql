@@ -6,7 +6,8 @@ CREATE TABLE SeIncluyeEn (
 	id_estado_devuelto INT,
 	fecha_devuelto DATE,
 
-	CONSTRAINT PK_SeIncluyeEn PRIMARY KEY (id_prestamo, num_ejemplar, cod_isbn),
+	-- PK { id_prestamo, cod_isbn }: un mismo préstamo NO puede incluir 2 ejemplares de la misma edición (nivel DDL).
+	CONSTRAINT PK_SeIncluyeEn PRIMARY KEY (id_prestamo, cod_isbn),
 
 	CONSTRAINT FK_SeIncluyeEn_Prestamo FOREIGN KEY (id_prestamo) REFERENCES Prestamo(id_prestamo),
 
