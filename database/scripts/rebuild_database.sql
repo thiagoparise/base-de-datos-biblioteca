@@ -93,6 +93,8 @@ PRINT 'Creando vistas...';
 GO
 :r ../views/vw_prestamos_activos.sql
 GO
+:r ../views/vw_prestamos_por_mes.sql
+GO
 
 
 -- =========================================
@@ -104,6 +106,8 @@ GO
 :r ../procedures/sp_prestamos_vencidos_a_fecha.sql
 GO
 :r ../procedures/sp_estado_ejemplares.sql
+GO
+:r ../procedures/sp_estadisticas_prestamos_mes.sql
 GO
 
 
