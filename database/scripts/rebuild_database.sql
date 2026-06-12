@@ -74,6 +74,18 @@ PRINT 'Creando tablas relacionales...';
 
 
 -- =========================================
+-- TRIGGERS
+-- =========================================
+
+PRINT 'Creando triggers...';
+GO
+:r ../triggers/tr_se_incluye_en_disponibilidad_insert.sql
+GO
+:r ../triggers/tr_se_incluye_en_disponibilidad_update.sql
+GO
+
+
+-- =========================================
 -- VIEWS
 -- =========================================
 
@@ -90,6 +102,8 @@ GO
 PRINT 'Creando stored procedures...';
 GO
 :r ../procedures/sp_prestamos_vencidos_a_fecha.sql
+GO
+:r ../procedures/sp_estado_ejemplares.sql
 GO
 
 

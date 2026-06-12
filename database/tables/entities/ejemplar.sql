@@ -1,5 +1,5 @@
 CREATE TABLE Ejemplar (
-	num_ejemplar INT IDENTITY(1,1),
+	num_ejemplar INT NOT NULL,   -- número físico del ejemplar dentro de su edición (1, 2, 3, ... reinicia por cod_isbn)
 
 	cod_isbn CHAR(13) NOT NULL,
 
