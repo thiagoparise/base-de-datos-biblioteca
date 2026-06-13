@@ -95,6 +95,8 @@ GO
 GO
 :r ../views/vw_prestamos_por_mes.sql
 GO
+:r ../views/vw_solicitudes_lector.sql
+GO
 
 
 -- =========================================
@@ -108,6 +110,8 @@ GO
 :r ../procedures/sp_estado_ejemplares.sql
 GO
 :r ../procedures/sp_estadisticas_prestamos_mes.sql
+GO
+:r ../procedures/sp_notificar_nuevo_libro.sql
 GO
 
 
