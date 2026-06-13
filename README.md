@@ -5,6 +5,7 @@
 ## Índice
 - [Descripción del Proyecto](#descripcion-del-proyecto)
 - [Setup de Base de Datos] (#setup-base-de-datos)
+- [Setup Aplicación CLI](#setup-aplicacion-cli)
 - [Base de Datos](#base-de-datos)
 - [Validación de Requerimientos](#validacion-de-requerimientos)
 - [Estructura del Proyecto](#estructura-del-proyecto)
@@ -54,7 +55,7 @@ Sistema de Gestión de Biblioteca Universitaria implementado sobre **SQL Server*
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) **instalado y con el daemon corriendo** (no alcanza con la app abierta — esperá a que el ícono de la barra de menú deje de animarse). Verificalo con `docker info`.
 - [sqlcmd](https://learn.microsoft.com/es-es/sql/tools/sqlcmd/sqlcmd-utility) instalado y en el PATH
-- Archivo `.env` en la raíz del proyecto (ver `.env.example`)
+- Archivo `.env` en la raíz: `cp .env.example .env` y luego setear `MSSQL_SA_PASSWORD` con una contraseña válida
 
 ### Primera vez (o rebuild completo)
 
@@ -153,6 +154,69 @@ docker ps  # el contenedor biblioteca-sqlserver debe aparecer como "Up"
 
 **Apple Silicon (M1/M2/M3) o Linux ARM64: el contenedor falla al iniciar**
 `mssql/server` no tiene imagen ARM64 nativa y crashea bajo emulación. El proyecto usa `azure-sql-edge`, que sí soporta ARM64. Si al hacer pull ves que la imagen cambió respecto a lo que tenías, es para mantener compatibilidad con todos los equipos.
+
+---
+
+<a id="setup-aplicacion-cli"></a>
+## 🖥️ Setup Aplicación CLI
+
+Aplicación Node.js + TypeScript que expone los stored procedures como un menú interactivo en terminal. Implementa el último punto del enunciado ("Desarrollar una aplicación que acceda a la BD"). El código vive en `app/`.
+
+El runtime de Node corre **dentro de Docker** — el equipo no necesita instalar Node ni npm localmente, alcanza con tener Docker.
+
+### Requisitos previos
+
+- Docker Desktop corriendo (mismo requisito que para la base)
+- Base de datos seedeada (`./setup_database.sh --with-seed` ya ejecutado al menos una vez)
+
+### Primera vez (instalar dependencias)
+
+```bash
+# Levantar SQL Server + container de Node 22 (profile "app")
+docker compose --profile app up -d
+
+# Instalar dependencias adentro del contenedor
+docker compose exec app npm install
+```
+
+El `node_modules/` queda en `app/` localmente (vía volumen montado), así el editor ve los tipos para autocomplete y chequeo en tiempo real.
+
+### Uso diario
+
+```bash
+# Correr la CLI con menú interactivo
+docker compose exec -it app npm start
+```
+
+Muestra el menú:
+
+```
+=== Biblioteca CLI ===
+  1) Listar préstamos vencidos
+  2) Consultar estado actual de ejemplares
+  3) Consultar estadísticas mensuales
+  4) Notificar lectores sobre nuevo libro
+  0) Salir
+
+Selecciona una opción:
+```
+
+Cada opción pide los parámetros que requiere el SP (fecha, criterio, año/mes, etc.) y muestra el resultado en formato de tabla con `console.table()`.
+
+### Otros comandos disponibles
+
+| Comando | Qué hace |
+|---|---|
+| `docker compose exec -it app npm run dev` | Modo desarrollo con `tsx watch` — reinicia al guardar un `.ts` |
+| `docker compose exec app npm run typecheck` | Chequea tipos sin ejecutar (`tsc --noEmit`) |
+| `docker compose --profile app down` | Para SQL Server + container de Node |
+
+### Modo `simular` para Req 4
+
+La opción 4 (notificar) tiene un sub-menú con dos modos:
+
+- **`existente`**: pide un `id_libro` que ya esté en la base y muestra a quién hay que notificar.
+- **`simular`**: pide título + autores de un libro hipotético, lo inserta en una transacción, ejecuta el SP, **hace ROLLBACK al final**. Útil para probar escenarios sin contaminar el seed.
 
 ---
 
