@@ -15,6 +15,7 @@ SELECT
 	L.apellido,
 	L.cuil,
 	L.telefono,
+	L.email,
 	LI.id_libro,
 	LI.titulo,
 	SIE.cod_isbn,

@@ -45,6 +45,7 @@ BEGIN
 		apellido,
 		cuil,
 		telefono,
+		email,
 		id_libro,
 		titulo,
 		cod_isbn,
