@@ -267,16 +267,43 @@ EXEC sp_estado_ejemplares @tipo_filtro = 'invalido', @id_filtro = 1;
 > *"La estadística de la cantidad de libros prestados por mes, agrupados por diferentes criterios (por título, autor, editorial, tema, etc.) y su correspondiente comparativa con el mismo mes del año anterior."*
 
 ```sql
--- Vista base
-SELECT DISTINCT año, mes, nombre_mes FROM vw_prestamos_por_mes ORDER BY año, mes;
+-- Vista base: granularidad (préstamo × ejemplar), 1 fila por SeIncluyeEn
+SELECT año, mes, nombre_mes, COUNT(*) AS ejemplares_prestados
+FROM vw_prestamos_por_mes
+GROUP BY año, mes, nombre_mes
+ORDER BY año, mes;
+-- Esperado: filas para 2024 (escenarios notificar), 2025 (interanual) y 2026 (mes corriente)
 
--- 4 criterios del spec
+
+-- Enero 2026 vs Enero 2025, agrupado por TÍTULO
 EXEC sp_estadisticas_prestamos_mes @año = 2026, @mes = 1, @agrupar_por = 'titulo';
-EXEC sp_estadisticas_prestamos_mes @año = 2026, @mes = 1, @agrupar_por = 'editorial';
-EXEC sp_estadisticas_prestamos_mes @año = 2026, @mes = 3, @agrupar_por = 'autor';
-EXEC sp_estadisticas_prestamos_mes @año = 2026, @mes = 1, @agrupar_por = 'tema';
+-- Esperado: "Fundamentos de Bases de Datos" → actual = 2 (P1: María se llevó 2 ediciones)
+--                                              anterior = 1 (P8: Luis en enero 2025)
 
--- Validación: criterio inválido → RAISERROR
+
+-- Enero 2026 vs Enero 2025, agrupado por EDITORIAL
+EXEC sp_estadisticas_prestamos_mes @año = 2026, @mes = 1, @agrupar_por = 'editorial';
+-- Esperado: "Pearson Educación" → actual = 2, anterior = 1
+--           (las 2 ediciones de Fundamentos BD que llevó María, ambas Pearson)
+
+
+-- Marzo 2026 vs Marzo 2025, agrupado por AUTOR
+EXEC sp_estadisticas_prestamos_mes @año = 2026, @mes = 3, @agrupar_por = 'autor';
+-- Esperado: 4 filas (un ejemplar de libro multi-autor cuenta por cada autor)
+--   Cormen        → actual = 1, anterior = 1   (Algoritmos en P3 y P7)
+--   Leiserson     → actual = 1, anterior = 1   (idem)
+--   Silberschatz  → actual = 1, anterior = 0   (Diseño BD Rel en P3)
+--   Tanenbaum     → actual = 1, anterior = 0   (Redes en P3)
+
+
+-- Enero 2026 vs Enero 2025, agrupado por TEMA
+EXEC sp_estadisticas_prestamos_mes @año = 2026, @mes = 1, @agrupar_por = 'tema';
+-- Esperado:
+--   Base de Datos             → actual = 2, anterior = 1   (Fundamentos BD ambas ediciones tienen este tema)
+--   Ingeniería de Software    → actual = 1, anterior = 1   (solo la 7a edición tiene este tema)
+
+
+-- Validación: criterio inválido → RAISERROR con mensaje claro
 EXEC sp_estadisticas_prestamos_mes @año = 2026, @mes = 1, @agrupar_por = 'invalido';
 ```
 
