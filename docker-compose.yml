@@ -18,5 +18,37 @@ services:
 
     restart: unless-stopped
 
+  app:
+    # Runtime de Node 22 LTS para todo el equipo. Evita pedirle a cada uno que instale Node localmente.
+    # Profile "app" → opt-in: solo arranca con `docker compose --profile app up`.
+    image: node:22-alpine
+
+    container_name: biblioteca-app
+
+    working_dir: /usr/src/app
+
+    volumes:
+      - ./app:/usr/src/app
+
+    environment:
+      # Adentro de la red de Docker, el host de SQL Server es el nombre del servicio.
+      MSSQL_SERVER: sqlserver
+      MSSQL_PORT: "1433"
+      MSSQL_USER: sa
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+      MSSQL_DATABASE: biblioteca
+
+    depends_on:
+      - sqlserver
+
+    # Mantiene el contenedor vivo para poder hacer `docker compose exec app <cmd>`.
+    command: tail -f /dev/null
+
+    stdin_open: true
+    tty: true
+
+    profiles:
+      - app
+
 volumes:
   sqlserver_data:
