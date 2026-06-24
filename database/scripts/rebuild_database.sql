@@ -113,6 +113,8 @@ GO
 GO
 :r ../procedures/sp_notificar_nuevo_libro.sql
 GO
+:r ../procedures/sp_registrar_prestamo.sql
+GO
 
 
 -- =========================================
