@@ -1,6 +1,12 @@
 import sql from 'mssql'
 import { execProcedure, getPool } from '../db-client'
-import { preguntarOpcion, preguntarEntero, preguntarTexto } from '../cli'
+import {
+	mostrarTitulo,
+	preguntarEntero,
+	preguntarOpcionNumerada,
+	preguntarTexto,
+	renderTabla,
+} from '../cli'
 
 async function ejecutarExistente(): Promise<void> {
 	const id_libro_nuevo = await preguntarEntero('ID del libro (Libro.id_libro): ')
@@ -10,7 +16,8 @@ async function ejecutarExistente(): Promise<void> {
 	if (resultado.length === 0) {
 		throw new Error('Ningún lector a notificar.')
 	}
-	console.table(resultado)
+	console.log()
+	renderTabla(resultado)
 }
 
 async function ejecutarSimular(): Promise<void> {
@@ -65,7 +72,8 @@ async function ejecutarSimular(): Promise<void> {
 			throw new Error('Ningún lector a notificar.')
 		}
 
-		console.table(resultado.recordset)
+		console.log()
+		renderTabla(resultado.recordset)
 	} finally {
 		await transaccion.rollback()
 		console.log('↩ Rollback aplicado: la BD no quedó modificada.')
@@ -73,7 +81,12 @@ async function ejecutarSimular(): Promise<void> {
 }
 
 export async function ejecutar(): Promise<void> {
-	const modo = await preguntarOpcion('Modo', ['existente', 'simular'] as const)
+	mostrarTitulo('Notificar lectores sobre nuevo libro')
+
+	const modo = await preguntarOpcionNumerada('Modo', [
+		'existente',
+		'simular',
+	] as const)
 
 	switch (modo) {
 		case 'existente':

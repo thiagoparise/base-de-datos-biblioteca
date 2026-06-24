@@ -1,14 +1,23 @@
 import { execProcedure } from '../db-client'
-import { preguntarOpcion, preguntarEntero } from '../cli'
+import {
+	mostrarTitulo,
+	preguntarEntero,
+	preguntarOpcionNumerada,
+	renderTabla,
+} from '../cli'
 
 export async function ejecutar(): Promise<void> {
-	const tipo_filtro = await preguntarOpcion('Tipo de filtro', [
+	mostrarTitulo('Estado actual de ejemplares')
+
+	const tipo_filtro = await preguntarOpcionNumerada('Tipo de filtro', [
 		'libro',
 		'autor',
 		'tema',
 		'profesor',
 	] as const)
-	const id_filtro = await preguntarEntero('ID del filtro: ')
+	const id_filtro = await preguntarEntero(
+		`ID del ${tipo_filtro}: `,
+	)
 
 	const resultado = await execProcedure('sp_estado_ejemplares', {
 		tipo_filtro,
@@ -19,5 +28,6 @@ export async function ejecutar(): Promise<void> {
 		throw new Error('No se encontraron ejemplares.')
 	}
 
-	console.table(resultado)
+	console.log()
+	renderTabla(resultado)
 }

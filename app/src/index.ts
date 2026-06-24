@@ -16,15 +16,15 @@ const Opcion = {
 type Opcion = (typeof Opcion)[keyof typeof Opcion]
 
 async function menu(): Promise<void> {
-	console.log('\n=== Biblioteca CLI ===')
-	console.log('  1) Listar préstamos vencidos')
-	console.log('  2) Consultar estado actual de ejemplares')
-	console.log('  3) Consultar estadísticas mensuales')
-	console.log('  4) Notificar lectores sobre nuevo libro')
-	console.log('  0) Salir')
-
 	let salir = false
 	do {
+		console.log('\n=== Biblioteca CLI ===')
+		console.log('  1) Listar préstamos vencidos')
+		console.log('  2) Consultar estado actual de ejemplares')
+		console.log('  3) Consultar estadísticas mensuales')
+		console.log('  4) Notificar lectores sobre nuevo libro')
+		console.log('  0) Salir')
+
 		const opcion = await preguntarOpcion(
 			'\nSelecciona una opción',
 			Object.values(Opcion),

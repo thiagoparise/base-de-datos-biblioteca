@@ -1,10 +1,17 @@
 import { execProcedure } from '../db-client'
-import { preguntarOpcion, preguntarEntero } from '../cli'
+import {
+	mostrarTitulo,
+	preguntarEntero,
+	preguntarOpcionNumerada,
+	renderTabla,
+} from '../cli'
 
 export async function ejecutar(): Promise<void> {
+	mostrarTitulo('Estadísticas mensuales de préstamos')
+
 	const año = await preguntarEntero('Año: ')
 	const mes = await preguntarEntero('Mes (1-12): ')
-	const agrupar_por = await preguntarOpcion('Agrupar por', [
+	const agrupar_por = await preguntarOpcionNumerada('Agrupar por', [
 		'titulo',
 		'editorial',
 		'autor',
@@ -21,5 +28,6 @@ export async function ejecutar(): Promise<void> {
 		throw new Error('Sin datos para ese mes.')
 	}
 
-	console.table(resultado)
+	console.log()
+	renderTabla(resultado)
 }
